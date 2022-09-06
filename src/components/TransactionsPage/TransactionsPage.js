@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { fetchTransactions } from '../../features/transaction/transactionSlice';
-import Transaction from './Transaction';
+import Search from './Search';
+import TransactionItem from './TransactionItem';
 
-const Transactions = () => {
+const TransactionsPage = () => {
     const { transactions, isLoading, isError, error } = useSelector(
         (state) => state.transactions
     );
     const dispatch = useDispatch();
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchTransactions());
@@ -28,10 +26,10 @@ const Transactions = () => {
     }
     
     if (!isLoading && transactions.length > 0) {
-        const filteredTransactions = [...transactions].reverse().slice(0, 5);
+        const filteredTransactions = [...transactions].reverse();
 
         content = filteredTransactions.map((transaction) => (
-            <Transaction key={transaction.id} transaction={transaction} />
+            <TransactionItem key={transaction.id} transaction={transaction} />
         ));
     }
 
@@ -41,14 +39,14 @@ const Transactions = () => {
 
     return (
         <>
-            <p className="second_heading">Your Recent Transactions:</p>
+        <Search />
+            <p className="second_heading">All Your Transactions:</p>
 
             <div className="conatiner_of_list_of_transactions">
                 <ul>{content}</ul>
-                {transactions.length > 5 && <button onClick={() => navigate('/all-transactions')} className="view-all">Show All Transactions</button>}
             </div>
         </>
     );
 };
 
-export default Transactions;
+export default TransactionsPage;

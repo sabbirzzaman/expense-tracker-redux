@@ -7,7 +7,7 @@ import {
     removeTransaction,
 } from '../../features/transaction/transactionSlice';
 
-const Transaction = ({ transaction }) => {
+const TransactionItem = ({ transaction }) => {
     const dispatch = useDispatch();
     const { id, name, type, amount } = transaction;
 
@@ -35,4 +35,4 @@ const Transaction = ({ transaction }) => {
     );
 };
 
-export default Transaction;
+export default TransactionItem;

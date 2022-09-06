@@ -1,5 +1,5 @@
 import React from 'react';
-import Transactions from './transactions/Transactions';
+import TransactionsPage from './TransactionsPage/TransactionsPage';
 
 const TransactionsLayout = () => {
     return (
@@ -10,7 +10,7 @@ const TransactionsLayout = () => {
 
             <div className="main">
                 <div className="container">
-                    <Transactions />
+                    <TransactionsPage />
                 </div>
             </div>
 
