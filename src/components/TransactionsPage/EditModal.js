@@ -50,7 +50,9 @@ const EditModal = () => {
         reset();
     };
 
-    const cancelEdit = () => {
+    const cancelEdit = (e) => {
+        e.preventDefault();
+
         dispatch(editInActive());
         setIsEditing(false);
         reset();
@@ -69,7 +71,7 @@ const EditModal = () => {
             <form onSubmit={updateTransaction} className="form">
                 <div className="modal-header">
                     <h3>Edit transaction</h3>
-                    <button onClick={cancelEdit}>x</button>
+                    <button onClick={(e) => cancelEdit(e)}>x</button>
                 </div>
 
                 <div className="form-group">
