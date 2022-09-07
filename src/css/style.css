@@ -59,7 +59,6 @@
     background-color: #fff;
     padding: 20px;
     width: 400px;
-    border-radius: 0px 0px 8px 8px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
@@ -181,11 +180,6 @@ label {
     text-align: left;
 }
 
-.conatiner_of_list_of_transactions ul {
-    max-height: 500px;
-    overflow-y: auto;
-}
-
 .view-all {
     width: 100%;
     border: none;
@@ -201,6 +195,7 @@ label {
 
 .search {
     border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .search-field {
@@ -230,6 +225,41 @@ label {
     display: flex;
     gap: 15px;
     justify-content: flex-end;
+}
+
+.pagination {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.page {
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: rgb(37 99 235);
+    color: white;
+    font-weight: 600;
+}
+
+.page-active {
+    background-color: #2ecc71;
+}
+
+.pagination-btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: rgb(37 99 235);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pagination-btn:disabled {
+    background-color: rgb(197, 195, 195);
+    cursor: default;
 }
 
 .error {

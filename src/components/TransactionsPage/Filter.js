@@ -1,12 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { filterTransaction } from '../../features/filters/filtersSlice';
 
 const Filter = () => {
+    const dispatch = useDispatch();
+
+    const handleFilter = (value) => {
+        dispatch(filterTransaction(value))
+    }
+
     return (
         <div className="transaction-filter">
-            <label htmlFor="transaction">Show Transaction by:</label>
+            <label>Show Transaction by:</label>
 
-            <select name="transaction" id="transaction">
-                <option defaultValue="all">Show All</option>
+            <select onChange={(e) => handleFilter(e.target.value)}>
+                <option value="" defaultValue>Show All</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
             </select>

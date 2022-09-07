@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../../features/transaction/transactionSlice';
+import Balance from '../Balance';
 import Filter from './Filter';
+import Pagination from './Pagination';
 import Search from './Search';
 import TransactionItem from './TransactionItem';
 
 const TransactionsPage = () => {
-    const { transactions, isLoading, isError, error } = useSelector(
+    const { transactions, isLoading, isError, error, page } = useSelector(
         (state) => state.transactions
     );
+    const { filter, search } = useSelector((state) => state.filters);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchTransactions());
-    }, [dispatch]);
+        dispatch(fetchTransactions({filter, search, page}));
+    }, [dispatch, filter, search, page]);
 
     // manage content
     let content;
@@ -27,7 +30,7 @@ const TransactionsPage = () => {
     }
 
     if (!isLoading && transactions.length > 0) {
-        const filteredTransactions = [...transactions].reverse();
+        const filteredTransactions = transactions;
 
         content = filteredTransactions.map((transaction) => (
             <TransactionItem key={transaction.id} transaction={transaction} />
@@ -40,14 +43,16 @@ const TransactionsPage = () => {
 
     return (
         <>
-            <div className='form search'>
+            <Balance />
+            <div className="form search">
                 <Search />
                 <Filter />
             </div>
-            <p className="second_heading">Your Transactions:</p>
 
             <div className="conatiner_of_list_of_transactions">
                 <ul>{content}</ul>
+
+                <Pagination />
             </div>
         </>
     );

@@ -1,9 +1,26 @@
 import axios from '../../utils/axios';
 
-export const getTransactions = async () => {
-    const res = await axios.get('/transactions');
+export const getTransactions = async (filter, search, page) => {
+    let queryString = '';
 
-    return res.data;
+    const pagination = `&_page=${page}&_limit=10`
+
+    if (filter) {
+        queryString += `&type_like=${filter}`;
+    }
+
+    if (search) {
+        queryString += `&q=${search}`;
+    }
+
+    const res = await axios.get(`/transactions?_order=desc${pagination}${queryString}`);
+
+    const filteredRes = await axios.get(`/transactions?_order=desc${queryString}`);
+
+    return {
+        data: res.data,
+        itemCount: filteredRes.data?.length,
+    };
 };
 
 export const addTransaction = async (data) => {

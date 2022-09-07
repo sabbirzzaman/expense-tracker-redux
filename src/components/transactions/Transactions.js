@@ -13,7 +13,7 @@ const Transactions = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchTransactions());
+        dispatch(fetchTransactions({}));
     }, [dispatch]);
 
     // manage content
@@ -28,7 +28,7 @@ const Transactions = () => {
     }
     
     if (!isLoading && transactions.length > 0) {
-        const filteredTransactions = [...transactions].reverse().slice(0, 5);
+        const filteredTransactions = transactions.slice(0, 5);
 
         content = filteredTransactions.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
