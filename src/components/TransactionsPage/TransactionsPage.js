@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../../features/transaction/transactionSlice';
 import Balance from '../Balance';
+import EditModal from './EditModal';
 import Filter from './Filter';
 import Pagination from './Pagination';
 import Search from './Search';
@@ -54,6 +55,8 @@ const TransactionsPage = () => {
 
                 <Pagination />
             </div>
+
+            <EditModal />
         </>
     );
 };
