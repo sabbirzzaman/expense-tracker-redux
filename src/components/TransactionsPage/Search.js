@@ -2,7 +2,7 @@ import React from 'react';
 
 const Search = () => {
     return (
-        <form className="form search">
+        <form>
             <div className='search-field'>
                 <input
                     type="text"
