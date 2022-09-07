@@ -13,8 +13,6 @@ const EditModal = () => {
 
     const dispatch = useDispatch();
 
-    console.log(isEditing)
-
     useEffect(() => {
         if (editing?.id) {
             setIsEditing(true);

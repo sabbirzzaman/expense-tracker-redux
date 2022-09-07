@@ -13,14 +13,19 @@ export const getTransactions = async (filter, search, page) => {
         queryString += `&q=${search}`;
     }
 
-    const res = await axios.get(`/transactions?_order=desc${pagination}${queryString}`);
-
-    const filteredRes = await axios.get(`/transactions?_order=desc${queryString}`);
+    const res = await axios.get(`/transactions?_sort=id&_order=desc${pagination}${queryString}`);
+    const filteredRes = await axios.get(`/transactions?_sort=id&_order=desc${queryString}`);
 
     return {
         data: res.data,
         itemCount: filteredRes.data?.length,
     };
+};
+
+export const getTotalTransaction = async () => {
+    const res = await axios.get('/transactions');
+
+    return res.data;
 };
 
 export const addTransaction = async (data) => {

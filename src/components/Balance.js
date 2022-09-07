@@ -1,21 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { totalTransactions } from '../features/transaction/transactionSlice';
 import numberWithComma from '../utils/numberWIthComma';
 
 const Balance = () => {
-    const {transactions} = useSelector(state => state.transactions);
+    const { balance } = useSelector((state) => state.transactions);
+    const dispatch = useDispatch();
 
-    let balance = 0;
-
-    if(transactions.length > 0) {
-        transactions.forEach((transaction => {
-            if(transaction.type === 'income') {
-                balance += transaction.amount
-            } else {
-                balance -= transaction.amount
-            }
-        }))
-    }
+    useEffect(() => {
+        dispatch(totalTransactions())
+    }, [dispatch])
 
     return (
         <div className="top_card">

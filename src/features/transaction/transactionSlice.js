@@ -3,6 +3,7 @@ import {
     addTransaction,
     deleteTransaction,
     editTransaction,
+    getTotalTransaction,
     getTransactions,
 } from './transactionAPI';
 
@@ -14,12 +15,13 @@ const initialState = {
     editing: {},
     page: 1,
     itemCount: 0,
+    balance: 0,
 };
 
 // async thunk
 export const fetchTransactions = createAsyncThunk(
     'transactions/fetchTransactions',
-    async ({filter, search, page}) => {
+    async ({ filter, search, page }) => {
         const transactions = getTransactions(filter, search, page);
         return transactions;
     }
@@ -49,6 +51,15 @@ export const removeTransaction = createAsyncThunk(
     }
 );
 
+export const totalTransactions = createAsyncThunk(
+    'transactions/totalTransactions',
+    async () => {
+        const transactions = getTotalTransaction();
+
+        return transactions;
+    }
+);
+
 const transactionSlice = createSlice({
     name: 'transaction',
     initialState,
@@ -61,7 +72,7 @@ const transactionSlice = createSlice({
         },
         changePage: (state, action) => {
             state.page = action.payload;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchTransactions.pending, (state) => {
@@ -89,7 +100,7 @@ const transactionSlice = createSlice({
         builder.addCase(createTransaction.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isError = false;
-            state.transactions.push(action.payload);
+            state.transactions.unshift(action.payload);
             state.error = '';
         });
         builder.addCase(createTransaction.rejected, (state, action) => {
@@ -121,7 +132,6 @@ const transactionSlice = createSlice({
             state.isError = false;
         });
         builder.addCase(removeTransaction.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.isLoading = false;
             state.isError = false;
             state.transactions = state.transactions.filter(
@@ -134,8 +144,25 @@ const transactionSlice = createSlice({
             state.isError = true;
             state.error = action.error?.message;
         });
+        builder.addCase(totalTransactions.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+
+            let balance = 0;
+
+            action.payload.forEach((transaction) => {
+                if (transaction.type === 'income') {
+                    balance += transaction.amount;
+                } else {
+                    balance -= transaction.amount;
+                }
+            });
+
+            state.balance = balance;
+        });
     },
 });
 
 export default transactionSlice.reducer;
-export const { editActive, editInActive, changePage } = transactionSlice.actions;
+export const { editActive, editInActive, changePage } =
+    transactionSlice.actions;
