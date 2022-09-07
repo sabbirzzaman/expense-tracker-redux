@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTransaction, editInActive } from '../../features/transaction/transactionSlice';
+import {
+    changeTransaction,
+    editInActive,
+} from '../../features/transaction/transactionSlice';
 
 const EditModal = () => {
     const [name, setName] = useState('');
@@ -37,10 +40,14 @@ const EditModal = () => {
         e.preventDefault();
 
         dispatch(
-            changeTransaction({ id: editing?.id, data: { name, type, amount: Number(amount) } })
+            changeTransaction({
+                id: editing?.id,
+                data: { name, type, amount: Number(amount) },
+            })
         );
-        reset();
+        dispatch(editInActive());
         setIsEditing(false);
+        reset();
     };
 
     const cancelEdit = () => {
@@ -49,12 +56,20 @@ const EditModal = () => {
         reset();
     };
 
+    useEffect(() => {
+        if (isEditing) {
+            document.body.style.overflowY = 'hidden';
+        } else {
+            document.body.style.overflowY = 'scroll';
+        }
+    }, [isEditing]);
+
     return (
         <div className={`edit-modal ${!isEditing && 'modal-hidden'}`}>
             <form onSubmit={updateTransaction} className="form">
                 <div className="modal-header">
-                <h3>Edit transaction</h3>
-                <button onClick={cancelEdit}>x</button>
+                    <h3>Edit transaction</h3>
+                    <button onClick={cancelEdit}>x</button>
                 </div>
 
                 <div className="form-group">
@@ -75,10 +90,10 @@ const EditModal = () => {
                         <input
                             type="radio"
                             value="income"
-                            required
                             name="type"
-                            checked={type === "income"}
+                            checked={type === 'income'}
                             onChange={(e) => setType(e.target.value)}
+                            required
                         />
                         <label htmlFor="transaction_type">Income</label>
                     </div>
@@ -88,7 +103,7 @@ const EditModal = () => {
                             value="expense"
                             name="type"
                             placeholder="Expense"
-                            checked={type === "expense"}
+                            checked={type === 'expense'}
                             onChange={(e) => setType(e.target.value)}
                         />
                         <label htmlFor="transaction_type">Expense</label>

@@ -26,16 +26,16 @@ const TransactionsPage = () => {
         content = 'loading...';
     }
 
-    if (!isLoading && transactions.length === 0) {
-        content = 'No video founded!';
-    }
-
     if (!isLoading && transactions.length > 0) {
         const filteredTransactions = transactions;
 
         content = filteredTransactions.map((transaction) => (
             <TransactionItem key={transaction.id} transaction={transaction} />
         ));
+    }
+
+    if (!isLoading && transactions.length === 0) {
+        content = 'No video founded!';
     }
 
     if (!isLoading && isError) {

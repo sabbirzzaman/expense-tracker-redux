@@ -50,8 +50,9 @@ const Form = () => {
         dispatch(
             changeTransaction({ id: editing?.id, data: { name, type, amount: Number(amount) } })
         );
-        reset();
+        dispatch(editInActive());
         setIsEditing(false);
+        reset();
     };
 
     const cancelEdit = () => {

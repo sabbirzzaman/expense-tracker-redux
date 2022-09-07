@@ -22,10 +22,6 @@ const Transactions = () => {
     if (isLoading && !isError) {
         content = 'loading...';
     }
-
-    if (!isLoading && transactions.length === 0) {
-        content = 'No video founded!';
-    }
     
     if (!isLoading && transactions.length > 0) {
         const filteredTransactions = transactions.slice(0, 5);
@@ -33,6 +29,10 @@ const Transactions = () => {
         content = filteredTransactions.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
         ));
+    }
+
+    if (!isLoading && transactions.length === 0) {
+        content = 'No video founded!';
     }
 
     if (!isLoading && isError) {

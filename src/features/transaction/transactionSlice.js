@@ -145,9 +145,6 @@ const transactionSlice = createSlice({
             state.error = action.error?.message;
         });
         builder.addCase(totalTransactions.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.isError = true;
-
             let balance = 0;
 
             action.payload.forEach((transaction) => {
