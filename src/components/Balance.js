@@ -4,12 +4,12 @@ import { totalTransactions } from '../features/transaction/transactionSlice';
 import numberWithComma from '../utils/numberWIthComma';
 
 const Balance = () => {
-    const { balance } = useSelector((state) => state.transactions);
+    const { balance, transactions } = useSelector((state) => state.transactions);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(totalTransactions())
-    }, [dispatch])
+    }, [dispatch, transactions])
 
     return (
         <div className="top_card">
